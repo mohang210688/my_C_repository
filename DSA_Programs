@@ -1,0 +1,225 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+**** DSA-1 : Count Occurrences in a Linked List ****
+
+struct node
+{
+	int data;
+	int times;
+	struct node *next;
+};
+
+struct node* createNode(int input)
+{
+	struct node* new_node = (struct node *)malloc(sizeof(struct node));
+	new_node->data = input;
+	new_node->times=0;
+	new_node->next = NULL;
+}
+
+void print_node_occurance(struct node* tmp_head)
+{
+	struct node* cur;
+
+	if (tmp_head == NULL) {
+		printf("\nNo node to display");
+		return;
+	}
+
+	cur = tmp_head;
+
+	while(cur)
+	{
+		printf("\n %d     %d", cur->data, cur->times);
+		cur = cur->next;
+	}
+}
+
+struct node* insert_node(struct node* head, struct node* new_node)
+{
+	struct node* cur;
+
+	if (head == NULL)
+		return new_node;
+
+	cur = head;
+
+	while (cur && (cur->next != NULL))
+	{
+		cur = cur->next;
+	}
+
+	cur->next=new_node;
+	return head;
+}
+
+int check_for_node_in_second_list(struct node* temp_head, struct node* cur)
+{
+	int present=0;
+	struct node* tmp;
+
+	if ((temp_head == NULL) || (cur == NULL))
+		return 0;
+
+	tmp= temp_head;
+
+	while (tmp)
+	{
+		if (tmp->data != cur->data)
+			tmp=tmp->next;
+		else {
+			present=1;
+			break;
+		}
+
+	}
+	if (present)
+		return 1;
+	else
+		return 0;
+}
+
+struct node* node_occurance(struct node* head)
+{
+    struct node* cur=NULL;
+    struct node* sec_head=NULL;
+    struct node* new_node=NULL;
+    int node_present=0;
+    
+	cur=head;
+
+	while (cur!=NULL)
+	{
+		if (sec_head==NULL)
+		{
+			new_node = createNode(cur->data);
+			new_node->times++;
+			sec_head=insert_node(sec_head, new_node);
+			printf("\nMOH : sec_head-data=%d", sec_head->data);
+			cur->times++;
+			cur=cur->next;
+		} else {
+			node_present=check_for_node_in_second_list(sec_head, cur);
+
+			if (node_present)
+			{
+                cur->times++;
+                sec_head->times++;
+                cur=cur->next;
+			} else {
+			    new_node = createNode(cur->data);
+			    sec_head=insert_node(sec_head, new_node);
+			    cur->times++;
+			    new_node->times++;
+			    cur=cur->next;
+			}
+
+		}
+	}
+	
+	return sec_head;
+}
+
+int main () {
+  struct node* head = NULL;
+	struct node* new_node = NULL;
+	struct node* sec_head = NULL;
+	int in;
+	char reply;
+	
+	do {
+		printf("\nEnter the input");
+		scanf("%d", &in);
+
+		new_node = createNode(in);
+		head = insert_node(head, new_node);
+		printf("\nDo you wish to continue (Y/N)");
+		scanf(" %c", &reply);
+	} while(reply == 'Y');
+	
+  sec_head = node_occurance(head);
+
+	print_node_occurance(sec_head);
+	return 0;
+}
+
+**** END ****
+
+**** DSA-2 : Remove nth node in a Linked List ****
+
+struct node* remove_nth_node(struct node*head, int remove_node)
+{
+	struct node* cur;
+	struct node* prev;
+	int node_cnt = 0;
+
+	if (head == NULL) {
+		printf("\nNo node to remove");
+		return 0;
+	}
+
+	cur = head;
+	prev = head;
+
+	while(cur)
+	{
+		node_cnt++;
+		if (node_cnt != remove_node)
+		{
+			prev = cur;
+			cur = cur->next;
+		} else {
+			prev->next = cur->next;
+			free(cur);
+			cur=NULL;
+		}
+	}
+	return head;
+}
+
+void print_node(struct node* head)
+{
+	struct node* cur;
+
+	if (head == NULL) {
+		printf("\nNo node to display");
+		return;
+	}
+
+	cur = head;
+
+	while(cur)
+	{
+		printf(" %d ", cur->data);
+		cur = cur->next;
+	}
+}
+
+int main () {
+  struct node* head = NULL;
+	struct node* new_node = NULL;
+	struct node* sec_head = NULL;
+	int in, remove_node;
+	char reply;
+	
+	do {
+		printf("\nEnter the input");
+		scanf("%d", &in);
+
+		new_node = createNode(in);
+		head = insert_node(head, new_node);
+		printf("\nDo you wish to continue (Y/N)");
+		scanf(" %c", &reply);
+	} while(reply == 'Y');
+
+	printf("\nNode in the list");
+	print_node(head);
+
+  printf("\nEnter Nth node to remove");
+	scanf("%d", &remove_node);
+
+	head = remove_nth_node(head, remove_node);
+	print_node(head);
+}
