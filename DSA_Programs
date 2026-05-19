@@ -149,6 +149,36 @@ int main () {
 
 **** DSA-2 : Remove nth node in a Linked List ****
 
+struct node
+{
+    int data;
+    struct node *next;
+};
+
+struct node* createNode(int input)
+{
+    struct node* new_node = (struct node *)malloc(sizeof(struct node));
+    new_node->data = input;
+    new_node->next = NULL;
+}
+
+struct node* insert_node(struct node* head, struct node* new_node)
+{
+	struct node* cur;
+
+	if (head == NULL)
+		return new_node;
+
+	cur = head;
+
+	while (cur && (cur->next != NULL))
+	{
+		cur = cur->next;
+	}
+	cur->next=new_node;
+	return head;
+}
+
 struct node* remove_nth_node(struct node*head, int remove_node)
 {
 	struct node* cur;
@@ -159,7 +189,6 @@ struct node* remove_nth_node(struct node*head, int remove_node)
 		printf("\nNo node to remove");
 		return 0;
 	}
-
 	cur = head;
 	prev = head;
 
@@ -187,7 +216,6 @@ void print_node(struct node* head)
 		printf("\nNo node to display");
 		return;
 	}
-
 	cur = head;
 
 	while(cur)
@@ -198,7 +226,7 @@ void print_node(struct node* head)
 }
 
 int main () {
-  struct node* head = NULL;
+    struct node* head = NULL;
 	struct node* new_node = NULL;
 	struct node* sec_head = NULL;
 	int in, remove_node;
@@ -217,9 +245,128 @@ int main () {
 	printf("\nNode in the list");
 	print_node(head);
 
-  printf("\nEnter Nth node to remove");
+    printf("\nEnter Nth node to remove");
 	scanf("%d", &remove_node);
 
 	head = remove_nth_node(head, remove_node);
 	print_node(head);
 }
+
+**** END ****
+
+**** DSA-3 : Remove every nth node in a Linked List ****
+
+struct node
+{
+    int data;
+    struct node *next;
+};
+
+struct node* createNode(int input)
+{
+    struct node* new_node = (struct node *)malloc(sizeof(struct node));
+    new_node->data = input;
+    new_node->next = NULL;
+}
+
+struct node* insert_node(struct node* head, struct node* new_node)
+{
+	struct node* cur;
+
+	if (head == NULL)
+		return new_node;
+
+	cur = head;
+
+	while (cur && (cur->next != NULL))
+	{
+		cur = cur->next;
+	}
+	cur->next=new_node;
+	return head;
+}
+
+struct node* remove_every_nth_node(struct node*head, int remove_every_n_node)
+{
+	struct node* cur;
+	struct node* prev;
+	struct node* temp;
+	int node_cnt = 0;
+
+	if (head == NULL) {
+		printf("\nNo node to remove");
+		return 0;
+	}
+	cur = head;
+	prev = head;
+
+	while(cur)
+	{
+		node_cnt++;
+		if ((node_cnt % remove_every_n_node) != 0)
+		{
+			prev = cur;
+			cur = cur->next;
+		} else {
+			prev->next = cur->next;
+			temp= cur;
+			cur = cur->next;
+			free(temp);
+			temp=NULL;
+		}
+	}
+	return head;
+}
+
+void print_node(struct node* head)
+{
+	struct node* cur;
+
+	if (head == NULL) {
+		printf("\nNo node to display");
+		return;
+	}
+
+	cur = head;
+
+	while(cur)
+	{
+		printf(" %d ", cur->data);
+		cur = cur->next;
+	}
+}
+
+int main () {
+    struct node* head = NULL;
+	struct node* new_node = NULL;
+	struct node* sec_head = NULL;
+	int in, remove_every_n_node;
+	char reply;
+	
+	do {
+		printf("\nEnter the input");
+		scanf("%d", &in);
+
+		new_node = createNode(in);
+		head = insert_node(head, new_node);
+		printf("\nDo you wish to continue (Y/N)");
+		scanf(" %c", &reply);
+	} while(reply == 'Y');
+
+	printf("\nNode in the list");
+	print_node(head);
+
+    printf("\nEnter every Nth node");
+	scanf("%d", &remove_every_n_node);
+
+	head = remove_every_nth_node(head, remove_every_n_node);
+	print_node(head);
+}
+
+**** END ****
+
+**** DSA-4 : Middle of the node in a Linked List ****
+
+**** END ****
+
+**** DSA-5 : Middle of the node in a Linked List ****
