@@ -1,0 +1,40 @@
+**** Types of Const Pointers in C ****
+1. Constant Pointer
+2. Pointer to constant
+3. Constant pointer to constant
+
+**** Constant Pointer ****
+
+- Address of the pointer can't be changed
+- Value present in pointer can be changed
+
+int x = 10, y = 20;
+int *const ptr = &x;   // ptr always points to x
+*ptr = 15;             // allowed: modify value at x
+// ptr = &y;           // error: cannot change address
+
+**** END ****
+
+**** Pointer to constant ****
+
+- Address of the pointer can be changed
+- Value present in pointer can't be changed
+
+int a = 5, b = 30;
+const int *ptr = &a;   // ptr points to a
+// *ptr = 10;          // error: cannot modify value
+ptr = &b;              // allowed: change address
+
+**** END ****
+
+**** Constant pointer to constant ****
+
+- Address of the pointer can't be changed
+- Value present in pointer can't be changed
+
+const int x = 50;
+const int *const ptr = &x; // fixed address, fixed value
+// *ptr = 60;              // error: cannot modify value
+// ptr = &y;               // error: cannot change address
+
+**** END ****
