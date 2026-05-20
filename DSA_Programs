@@ -367,6 +367,202 @@ int main () {
 
 **** DSA-4 : Middle of the node in a Linked List ****
 
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+	int data;
+	int times;
+	struct node *next;
+};
+
+struct node* createNode(int input)
+{
+	struct node* new_node = (struct node *)malloc(sizeof(struct node));
+	new_node->data = input;
+	new_node->times=0;
+	new_node->next = NULL;
+}
+
+void print_node(struct node* head)
+{
+	struct node* cur;
+
+	if (head == NULL) {
+		printf("\nNo node to display");
+		return;
+	}
+	cur = head;
+
+	while(cur)
+	{
+		printf(" %d ", cur->data);
+		cur = cur->next;
+	}
+}
+
+struct node* insert_node(struct node* head, struct node* new_node)
+{
+	struct node* cur;
+
+	if (head == NULL)
+		return new_node;
+
+	cur = head;
+	while (cur && (cur->next != NULL))
+	{
+		cur = cur->next;
+	}
+	cur->next=new_node;
+	return head;
+}
+
+int get_middle_node_in_list(struct node* head)
+{
+	struct node* cur;
+	struct node* double_cur;
+
+	cur= head;
+	double_cur=head;
+
+	while(double_cur && double_cur->next)
+	{
+		cur=cur->next;
+		double_cur=double_cur->next->next;
+	}
+	return(cur->data);
+}
+
+int main () {
+    struct node* head = NULL;
+	struct node* new_node = NULL;
+	int middle_node;
+	int in;
+	char reply;
+	
+	do {
+		printf("\nEnter the input");
+		scanf("%d", &in);
+
+		new_node = createNode(in);
+		head = insert_node(head, new_node);
+		printf("\nDo you wish to continue (Y/N)");
+		scanf(" %c", &reply);
+	} while(reply == 'Y');
+	
+    printf("\nNode in the list");
+	print_node(head);
+
+    middle_node = get_middle_node_in_list(head);
+	printf("\nMiddle node : %d", middle_node);
+
+	return 0;
+}
+
 **** END ****
 
-**** DSA-5 : Middle of the node in a Linked List ****
+**** DSA-5 : Reverse a Singly Linked List ****
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+	int data;
+	int times;
+	struct node *next;
+};
+
+struct node* createNode(int input)
+{
+	struct node* new_node = (struct node *)malloc(sizeof(struct node));
+	new_node->data = input;
+	new_node->times=0;
+	new_node->next = NULL;
+}
+
+void print_node(struct node* head)
+{
+	struct node* cur;
+
+	if (head == NULL) {
+		printf("\nNo node to display");
+		return;
+	}
+
+	cur = head;
+
+	while(cur)
+	{
+		printf(" %d ", cur->data);
+		cur = cur->next;
+	}
+}
+
+struct node* insert_node(struct node* head, struct node* new_node)
+{
+	struct node* cur;
+
+	if (head == NULL)
+		return new_node;
+
+	cur = head;
+
+	while (cur && (cur->next != NULL))
+	{
+		cur = cur->next;
+	}
+
+	cur->next=new_node;
+	return head;
+}
+
+struct node* reverse_list(struct node* head)
+{
+	struct node* cur;
+	struct node* prev;
+	struct node* next;
+
+	cur=head;
+	prev=NULL;
+
+	while(cur)
+	{
+		next=cur->next;
+		cur->next=prev;
+		prev=cur;
+		cur=next;
+	}
+
+	return prev;
+}
+
+int main () {
+    struct node* head = NULL;
+	struct node* new_node = NULL;
+	int middle_node;
+	int in;
+	char reply;
+	
+	do {
+		printf("\nEnter the input");
+		scanf("%d", &in);
+
+		new_node = createNode(in);
+		head = insert_node(head, new_node);
+		printf("\nDo you wish to continue (Y/N)");
+		scanf(" %c", &reply);
+	} while(reply == 'Y');
+	
+    printf("\nNode in the list");
+	print_node(head);
+
+    head = reverse_list(head);
+	printf("\nReverse List :");
+	print_node(head);
+
+	return 0;
+}
+
+**** END ****
