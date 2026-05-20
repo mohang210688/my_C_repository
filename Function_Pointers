@@ -1,0 +1,86 @@
+#include <stdio.h>
+
+char * func1() 
+{
+    char *str = "func1 is called";
+    return str;
+}
+
+char * func2() 
+{
+    char *str = "func2 is called";
+    return str;
+}
+
+void call (char * (*ptr)())
+{
+    printf("Callback : %s", ptr());
+}
+
+**** Pointer To Function ****
+
+int main()
+{
+    char *ptr = func1();
+
+    printf("Main = %s", ptr);
+   
+    return 0;
+}
+
+OUTPUT:
+Main = func1 is called
+
+**** END ****
+
+**** Function Pointer To Function ****
+
+int main()
+{
+    char* (*ptr1)();
+
+    ptr1= func1;
+    printf("Main = %s", ptr1());
+
+    return 0;
+}
+
+OUTPUT:
+Main = func1 is called
+
+**** END ****
+
+**** Array Of Function Pointer To Function ****
+
+int main()
+{
+   char * (*ptr[])()= {func1, func2};
+   int i;
+
+   for (i=0; i <2; i++) 
+   {
+       printf("Main : %s\n", (ptr[i])());
+   }
+
+    return 0;
+}
+
+OUTPUT:
+Main : func1 is called
+Main : func2 is called
+
+**** END ****
+
+**** Passing Function To Another Function ****
+
+int main()
+{
+   call(func1);
+
+    return 0;
+}
+
+OUTPUT:
+Callback : func1 is called
+
+**** END ****
